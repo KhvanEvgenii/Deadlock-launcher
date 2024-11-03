@@ -38,6 +38,14 @@ body {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: #f1f1f1;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.tab svg {
+  width: 18px;
+  height: 18px;
 }
 
 .tab button {
@@ -55,8 +63,12 @@ body {
 }
 
 .tab button.active {
-  background-color: #0fa302;
+  background-color: #202020;
   color: #fff;
+}
+
+.tab button:hover svg, .tab button.active svg{
+  filter: invert(1);
 }
 
 .tabcontent {
