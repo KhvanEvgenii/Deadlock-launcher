@@ -1,0 +1,26 @@
+{
+    "name": "deadlocklauncher",
+    "version": "0.0.1",
+    "main": "js/main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder"
+    },
+    "build": {
+        "appId": "io.github.KhvanEvgenii.DeadlockLaucher",
+        "win": {
+            "target": "nsis",
+            "icon": "static/icon.ico"
+        }
+    },
+    "devDependencies": {
+        "electron": "^33.0.2",
+        "electron-builder": "^25.1.8",
+        "hint": "^7.1.13"
+    },
+    "dependencies": {
+        "adm-zip": "^0.5.16",
+        "googleapis": "^144.0.0",
+        "jsdom": "^25.0.1"
+    }
+}
