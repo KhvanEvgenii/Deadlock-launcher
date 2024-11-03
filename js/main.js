@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { exec } = require('child_process');
 const config = require('../js/config');
 const check = require('../js/check');
-const path = require('path');
 
 let mainWindow;
 
@@ -61,8 +61,6 @@ ipcMain.handle('get-saved-path', () => {
 });
 
 ipcMain.handle('start', () => {
-    const { exec } = require('node:child_process');
-    const exeDir = path.join(config.readSavedPath(),'game','bin','win64','project8.exe');
-    exec(exeDir);
+    exec("start steam://rungameid/1422450");
     return true;
 });
