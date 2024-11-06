@@ -21,6 +21,8 @@
     "dependencies": {
         "adm-zip": "^0.5.16",
         "googleapis": "^144.0.0",
-        "jsdom": "^25.0.1"
+        "jsdom": "^25.0.1",
+        "nodejs-file-downloader": "^4.13.0",
+        "request": "^2.88.2"
     }
 }

@@ -3,8 +3,13 @@ const fs = require('fs');
 const configDir = path.join(__dirname, '..', 'userdata');
 const downloadDir = path.join(__dirname, '..', 'downloads');
 const configPath = path.join(configDir, 'config.json');
-const fontDirTemplate = path.join('game', 'citadel', 'panorama','fonts');
-const locDirTemplate = path.join('game', 'citadel', 'resource','localization');
+const fontDirTemplate = path.join('game', 'citadel', 'panorama', 'fonts');
+const locDirTemplate = path.join('game', 'citadel', 'resource', 'localization');
+const videoDirTemplate = path.join('game', 'citadel', 'panorama', 'videos', 'main_menu');
+const videosDir = path.join(configDir, 'videos');
+const videoLoopName = 'menu_streets_loop2.webm';
+const videoIntroName = 'menu_streets_intro.webm';
+
 
 function checkDir() {
     if (!fs.existsSync(configDir)) {
@@ -15,6 +20,9 @@ function checkDir() {
     }
     if (!fs.existsSync(downloadDir)) {
         fs.mkdirSync(downloadDir);
+    }
+    if (!fs.existsSync(videosDir)) {
+        fs.mkdirSync(videosDir);
     }
 }
 
@@ -98,6 +106,59 @@ function savePath(folderPath) {
     }
 }
 
+function saveVideo(urlFile, main = true) {
+    checkDir();
+
+    let videoFile;
+    let configName;
+    try {
+        const config = readLog();
+        console.log('Сохраняем конфиг');
+        if (main) {
+            videoFile = path.join(videosDir, videoLoopName);
+            configName = 'loopVideo';
+        } else {
+            videoFile = path.join(videosDir, videoIntroName);
+            configName = 'introVideo';
+        }
+        const mainVideo = path.join(videosDir, videoLoopName);
+        
+        fs.copyFileSync(urlFile, videoFile);
+ 
+        if (config[configName]) {
+            config[configName] = videoFile;
+        }
+        else {
+            config[configName] = videoFile;
+        }
+        fs.writeFileSync(configPath, JSON.stringify(config));
+    } catch (error) {
+        console.error('Ошибка сохранения конфига:', error);
+    }
+}
+
+function readSaveVideo(main = true) {
+    checkDir();
+
+    let configName;
+
+    if (main) {
+        configName = 'loopVideo';
+    } else {
+        configName = 'introVideo';
+    }
+
+    try {
+        const config = readLog();
+        if (config[configName]) {
+            return config[configName];
+        }
+    } catch (error) {
+        console.error('Ошибка чтения конфига:', error);
+    }
+    return null;
+}
+
 function readFolderUpdateTime() {
     checkDir();
     try {
@@ -139,9 +200,13 @@ module.exports = {
     saveTimeStamp,
     readSavedPath,
     savePath,
+    readSaveVideo,
+    saveVideo,
     readFolderUpdateTime,
     saveFolderUpdateTime,
     getDownloadDir,
     getFontsPath,
     getLocPath,
+    videosDir,
+    videoDirTemplate,
 };

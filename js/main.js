@@ -26,30 +26,58 @@ app.whenReady().then(() => {
     app.on('activate', function () {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
+
 });
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit();
 });
 
-ipcMain.handle('log-message', async (event, message) => {
+ipcMain.handle('log-message', async (event, message, inLastDiv) => {
     mainWindow.webContents.send('update-log', {
-        message
+        message,
+        inLastDiv
     });
+});
+
+ipcMain.handle('version', async () => {
+    return app.getVersion();
 });
 
 ipcMain.handle('select-folder', async () => {
     const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openDirectory']
     });
-    
+
     if (!result.canceled && result.filePaths.length > 0) {
         const selectedPath = result.filePaths[0];
         const correct = check.correctFolder(selectedPath);
 
-        if (correct) {        
+        if (correct) {
             config.savePath(selectedPath);
             return selectedPath;
+        }
+        return null;
+    }
+    return null;
+});
+
+ipcMain.handle('select-video', async (event, main) => {
+    console.log(main);
+    const result = await dialog.showOpenDialog(mainWindow, {
+        properties: ['openFile'],
+        filters: [
+            { name: 'Movies', extensions: ['webm'] },
+        ]
+    });
+
+    if (!result.canceled && result.filePaths.length > 0) {
+        const selectedVideo = result.filePaths[0];
+        const correct = check.correntVideoFile(selectedVideo);
+        console.log(selectedVideo);
+        if (correct) {
+            config.saveVideo(selectedVideo,main);
+            return config.readSaveVideo(main);
         }
         return null;
     }

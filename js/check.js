@@ -24,6 +24,10 @@ function correctFolder(selectedFolder){
     return result;
 }
 
+async function correntVideoFile(selectedVideo) {
+    return true;
+} 
+
 async function getData() {
     const { JSDOM } = jsdom;
     try {
@@ -91,5 +95,6 @@ module.exports = {
     translationUpdateCheck,
     folderUpdateCheck,
     correctFolder,
+    correntVideoFile,
     getData,
 };

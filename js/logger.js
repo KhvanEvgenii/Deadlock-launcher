@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron');
 
-function log(message) {
-    ipcRenderer.invoke('log-message', message);
+function log(message, inLastDiv = false) {
+    ipcRenderer.invoke('log-message', message, inLastDiv);
 }
 
 module.exports = log;
