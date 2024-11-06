@@ -32,8 +32,8 @@ function verison(message) {
 }
 
 async function checkUpdate(afterCheking) {
-  // afterCheking();
-  // return null;
+  afterCheking();
+  return null;
   logger('Проверяем обновление');
   const request = require('request');
   const currentVersion = await verison();
