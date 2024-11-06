@@ -1,6 +1,6 @@
 {
     "name": "deadlocklauncher",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "main": "js/main.js",
     "scripts": {
         "start": "electron .",

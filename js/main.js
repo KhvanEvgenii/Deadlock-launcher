@@ -44,6 +44,10 @@ ipcMain.handle('version', async () => {
     return app.getVersion();
 });
 
+ipcMain.handle('quit', async () => {
+    return app.quit();
+});
+
 ipcMain.handle('select-folder', async () => {
     const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openDirectory']
