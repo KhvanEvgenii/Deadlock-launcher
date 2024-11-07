@@ -8,8 +8,6 @@ const check = require('../js/check');
 const logger = require('../js/logger');
 const updater = require('../js/updater');
 
-const file = path.join(config.getDownloadDir(), 'rus.zip');
-
 const HTMLselectedPath = document.getElementById('selectedPath');
 const HTMLstartBut = document.getElementById('startDL');
 const HTMLstatusBlock = document.getElementById('statusBlock');
@@ -71,7 +69,16 @@ function changeTab(evt, tabName) {
 
 async function updateProgress() {
     const pathDir = config.readSavedPath();
+    const videoIntro = config.readSaveVideo(false);
+    const videoLoop = config.readSaveVideo(true);
     const downDir = config.getDownloadDir();
+
+    if (videoIntro) {
+        HTMLvideoIntro.setAttribute('src', videoIntro);
+    }
+    if (videoLoop) {
+        HTMLvideoLoop.setAttribute('src', videoLoop);
+    }
     
     try {
         if (pathDir) {
@@ -82,9 +89,12 @@ async function updateProgress() {
     
             const videoUpd = videoIntro || videoLoop;
             const updateNeeded = transUpd || folderUpd;
-    
+            
+            HTMLselectedPath.textContent = pathDir;
+
             if (updateNeeded) {
                 logger('Качаем перевод');
+                const file = path.join(downDir, 'rus.zip');
                 const zip = await downloadFile('1b06167m9_GtzUCCW2nyFrhiH-UUoR-wE', file);
     
                 if (zip) {
@@ -115,6 +125,9 @@ async function updateProgress() {
             HTMLstartBut.removeAttribute('disabled');
             logger('Готово');
         }
+        else {
+            document.getElementById("SettingsTab").click();
+        }
     } catch (error) {
         console.error('Ошибка сохранения конфига:', error);
     }
@@ -139,22 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
             elemDiv.innerHTML = '- ' + message + '</br>';
         }
     });
-
-    const pathDir = config.readSavedPath();
-    const videoIntro = config.readSaveVideo(false);
-    const videoLoop = config.readSaveVideo(true);
-
-    if (pathDir) {
-        HTMLselectedPath.textContent = pathDir;
-    } else {
-        document.getElementById("SettingsTab").click();
-    }
-    if (videoIntro) {
-        HTMLvideoIntro.setAttribute('src', videoIntro);
-    }
-    if (videoLoop) {
-        HTMLvideoLoop.setAttribute('src', videoLoop);
-    }
 
     beforeUpdateProgress();
 });

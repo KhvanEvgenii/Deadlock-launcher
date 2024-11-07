@@ -1,7 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const configDir = path.join(__dirname, '..', 'userdata');
-const downloadDir = path.join(__dirname, '..', 'downloads');
+const mainDir = getConfigDir();
+const configDir = path.join(mainDir, 'userdata');
+const downloadDir = path.join(mainDir,  'downloads');
 const configPath = path.join(configDir, 'config.json');
 const fontDirTemplate = path.join('game', 'citadel', 'panorama', 'fonts');
 const locDirTemplate = path.join('game', 'citadel', 'resource', 'localization');
@@ -10,8 +11,18 @@ const videosDir = path.join(configDir, 'videos');
 const videoLoopName = 'menu_streets_loop2.webm';
 const videoIntroName = 'menu_streets_intro.webm';
 
+function getConfigDir() {
+    if(process.execPath.includes('node')) {
+        return path.join(__dirname,'..');
+    }
+    return path.join(process.env.AppData, 'deadlocklauncher');
+}
 
 function checkDir() {
+    console.log(configDir);
+    console.log(downloadDir);
+    console.log(videosDir);
+
     if (!fs.existsSync(configDir)) {
         fs.mkdirSync(configDir);
     }

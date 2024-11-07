@@ -8,6 +8,11 @@
     },
     "build": {
         "appId": "io.github.KhvanEvgenii.DeadlockLaucher",
+        "files": [
+            "**/*",
+            "!downloads",
+            "!userdata"
+        ],
         "win": {
             "target": "nsis",
             "icon": "static/icon.ico"
@@ -20,6 +25,7 @@
     },
     "dependencies": {
         "adm-zip": "^0.5.16",
+        "child_process": "^1.0.2",
         "googleapis": "^144.0.0",
         "jsdom": "^25.0.1",
         "nodejs-file-downloader": "^4.13.0",

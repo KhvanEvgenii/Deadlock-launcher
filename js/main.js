@@ -96,3 +96,4 @@ ipcMain.handle('start', () => {
     exec("start steam://rungameid/1422450");
     return true;
 });
+

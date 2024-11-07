@@ -1,8 +1,9 @@
-const asyncfs = require('fs').promises;
+const fs = require('fs');
 const { Downloader } = require("nodejs-file-downloader");
 const config = require('../js/config');
 const { ipcRenderer } = require('electron');
 const logger = require('../js/logger');
+const exec = require('child_process').exec;
 
 async function Download(fileUrl) {
   logger('Качаем обновление');
@@ -11,14 +12,24 @@ async function Download(fileUrl) {
     url: fileUrl,
     directory: config.getDownloadDir(),
     cloneFiles: false,
-    onProgress: function (percentage, chunk, remainingSize) {
+    onProgress: function (percentage) {
       logger("% "+percentage,true);
     },
   });
   try {
-    const { filePath, downloadStatus } = await downloader.download();
-    asyncfs.open(filePath);
-    ipcRenderer.invoke('quit');
+    const { filePath } = await downloader.download();
+    // const filePath = path.join(config.getDownloadDir(),'deadlocklauncher Setup 0.0.3.exe');
+    const updaterBatPath = createUpdaterBat(filePath);
+
+    exec(`start "" "${updaterBatPath}"`, (error) => {
+      if (error) {
+        logger('Ошибка при запуске updater.bat');
+        console.error("Failed to execute updater.bat", error);
+      } else {
+        logger('Обновление запущено');
+      }
+    });
+
     logger('Обновление скачено, запустите новый файл');
   } catch (error) {
     logger('Ошибка при загрузке обновления');
@@ -27,7 +38,23 @@ async function Download(fileUrl) {
       console.log(error.responseBody)
     }
   }
-};
+}
+
+function createUpdaterBat(installerPath) {
+  const batContent = `
+@echo off
+echo Closing the application...
+taskkill /f /im deadlocklauncher.exe
+echo Starting installer...
+start "" "${installerPath}"
+exit
+  `;
+
+  const batFilePath = path.join(config.getDownloadDir(), 'updater.bat');
+
+  fs.writeFileSync(batFilePath, batContent, 'utf8');
+  return batFilePath;
+}
 
 function verison(message) {
   return ipcRenderer.invoke('version');
@@ -42,6 +69,7 @@ async function checkUpdate(afterCheking) {
   
   const options = {
     url: 'https://api.github.com/repos/KhvanEvgenii/Deadlock-launcher/releases',
+    timeout: 10000,
     headers: {
       'User-Agent': 'request'
     }
