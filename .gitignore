@@ -1,4 +1,4 @@
-node_modules
-dist
-downloads
-userdata
+node_modules/
+dist/
+downloads/
+userdata/

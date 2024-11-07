@@ -65,6 +65,10 @@ async function checkUpdate(afterCheking) {
         afterCheking();
       }
     }
+    else {
+      logger('Не удалось проверить обновление');
+      afterCheking();
+    }
   }
   
   request(options, callback);

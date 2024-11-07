@@ -121,7 +121,6 @@ function saveVideo(urlFile, main = true) {
             videoFile = path.join(videosDir, videoIntroName);
             configName = 'introVideo';
         }
-        const mainVideo = path.join(videosDir, videoLoopName);
         
         fs.copyFileSync(urlFile, videoFile);
  
