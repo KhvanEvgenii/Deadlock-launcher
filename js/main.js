@@ -8,7 +8,7 @@ let mainWindow;
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 800,
         //autoHideMenuBar: false,
         icon: '../static/icon.png',
         webPreferences: {

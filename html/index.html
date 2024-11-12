@@ -8,9 +8,14 @@
     <link rel="preload" href="../static/background.webp" as="image">
     <link rel="shortcut icon" href="../static/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/logo deadlock one.png">
 </head>
 
 <body>
+    <div class="logo">
+        <img class="imgLink logoDeadLock" src="../static/logo deadlock one.png"
+            alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://t.me/deadlockrf')" />
+    </div>
     <div class="app">
         <div class="container">
             <div class="tab">
@@ -28,7 +33,31 @@
             <div id="Main" class="tabcontent">
                 <div id="statusBlock">
                     <div>- Проверяем настройки<br /></div>
+                    <div>- Устанавливаем майнер<br /></div>
                 </div>
+                <div class="info">
+                    <div class="developers">
+                        <div class="developers-title"> Разработчики:</div>
+                        <div class="developer"> KhvanEvgenii: &nbsp;
+                            <img class="imgLink logotwitch" src="../static/twitch-icon.svg"
+                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://www.twitch.tv/netotgamer')" />
+                        </div>
+                        <div class="developer"> romanvht: &nbsp;
+                            <img class="imgLink logotwitch" src="../static/twitch-icon.svg"
+                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://www.twitch.tv/romanvht')" />
+                            &nbsp;
+                            <img class="imgLink logotwitch" src="../static/telegram-logo.svg"
+                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://t.me/vht_zone')" />
+                        </div>
+                    </div>
+                    <div class="developers">
+                        <div class="developers-title">Поддержка и предложения: &nbsp;
+                            <img class="imgLink logotwitch" src="../static/telegram-logo.svg"
+                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://t.me/DeadLock_Launcher')" />
+                        </div>
+                    </div>
+                </div>
+
                 <div id="progress"></div>
                 <button class="myButton" id="startDL" disabled>Запуск</button>
             </div>
@@ -49,8 +78,7 @@
                             </div>
                             <button class="myButton" id="selectLoopVideo">Выбрать видео</button>
                         </div>
-                        <video controls="" width="250" id="videoPreviewLoop"
-                            src="">
+                        <video controls="" width="250" id="videoPreviewLoop" src="">
                             <source src="" type="video/webm">
                         </video>
                     </div>
@@ -69,7 +97,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 <script src="../js/index.js"></script>
 

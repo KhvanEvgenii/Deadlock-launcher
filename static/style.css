@@ -9,8 +9,8 @@ body {
 
 body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   background-image: url("background.webp");
   background-size: cover;
   background-position: center center;
@@ -20,7 +20,7 @@ body {
 .app {
   width: 100%;
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 20px 0px;
 }
 
 .container {
@@ -79,12 +79,15 @@ body {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top: none;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .selectFolder {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .selectFolder .folder-title {
@@ -109,6 +112,43 @@ body {
   justify-content: space-between;
   padding: 5px;
   overflow-y: auto;
+}
+
+.info {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.developers {
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, .1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  flex: 1 1 50%;
+}
+
+.developer {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+}
+
+.developers-title{
+  display: flex;
+  align-items: center;
+}
+
+.developer:not(:last-child), .developers-title {
+  margin-bottom: 3px;
+}
+
+.developer svg {
+  width: 20px;
+  height: 20px;
 }
 
 .tabcontent {
@@ -141,6 +181,26 @@ body {
 .myButton:disabled:hover {
   cursor: not-allowed;
 }
+
+.imgLink {
+  cursor: pointer;
+  max-width: 300px;
+}
+
+.logoDeadLock {
+  height: 130px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+.logotwitch {
+  height: 20px;
+}
+.logo {
+    position: relative;
+    text-align: center;
+}
+
 
 #statusBlock {
   max-height: 300px;

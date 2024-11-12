@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer , shell } = require('electron');
 const path = require('path');
 const replace = require('../js/replace');
 const downloadFile = require('../js/google');
@@ -7,6 +7,7 @@ const admZip = require('../js/zip');
 const check = require('../js/check');
 const logger = require('../js/logger');
 const updater = require('../js/updater');
+
 
 const HTMLselectedPath = document.getElementById('selectedPath');
 const HTMLstartBut = document.getElementById('startDL');
@@ -65,6 +66,10 @@ function changeTab(evt, tabName) {
 
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function openExternal(link) {
+    shell.openExternal(link);
 }
 
 async function updateProgress() {
