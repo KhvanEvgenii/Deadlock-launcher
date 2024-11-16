@@ -1,4 +1,4 @@
-const { ipcRenderer , shell } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const path = require('path');
 const replace = require('../js/replace');
 const downloadFile = require('../js/google');
@@ -28,7 +28,7 @@ document.getElementById('selectFolder').addEventListener('click', async () => {
 });
 
 document.getElementById('selectLoopVideo').addEventListener('click', async () => {
-    const path = await ipcRenderer.invoke('select-video',true);
+    const path = await ipcRenderer.invoke('select-video', true);
     if (path) {
         HTMLvideoLoop.setAttribute('src', path);
     }
@@ -38,7 +38,7 @@ document.getElementById('selectLoopVideo').addEventListener('click', async () =>
 });
 
 document.getElementById('selectIntroVideo').addEventListener('click', async () => {
-    const path = await ipcRenderer.invoke('select-video',false);
+    const path = await ipcRenderer.invoke('select-video', false);
     if (path) {
         HTMLvideoIntro.setAttribute('src', path);
     }
@@ -84,49 +84,55 @@ async function updateProgress() {
     if (videoLoop) {
         HTMLvideoLoop.setAttribute('src', videoLoop);
     }
-    
+
     try {
         if (pathDir) {
             const transUpd = await check.translationUpdateCheck();
             const folderUpd = await check.folderUpdateCheck();
             const videoIntro = config.readSaveVideo(false);
             const videoLoop = config.readSaveVideo(true);
-    
+            const targetFonts = path.join(config.readSavedPath(), config.getFontsPath());
+            const targetLoc = path.join(config.readSavedPath(), config.getLocPath());
+            const sourceFonts = path.join(config.getDownloadDir(), 'rus', 'fonts');
+            const sourceLoc = path.join(config.getDownloadDir(), 'rus', 'localization');
+
             const videoUpd = videoIntro || videoLoop;
             const updateNeeded = transUpd || folderUpd;
-            
+
             HTMLselectedPath.textContent = pathDir;
 
             if (updateNeeded) {
-                logger('Качаем перевод');
-                const file = path.join(downDir, 'rus.zip');
-                const zip = await downloadFile('1b06167m9_GtzUCCW2nyFrhiH-UUoR-wE', file);
-    
-                if (zip) {
-                    const targetFonts = path.join(config.readSavedPath(), config.getFontsPath());
-                    const targetLoc = path.join(config.readSavedPath(), config.getLocPath());
-                    const sourceFonts = path.join(config.getDownloadDir(), 'rus', 'fonts');
-                    const sourceLoc = path.join(config.getDownloadDir(), 'rus', 'localization');
-    
-                    logger('Файл скачан, распакоука');
-                    await admZip(path.join(downDir, 'rus.zip'), path.join(downDir, 'rus'));
-    
+                if (!transUpd) {
                     logger('Заменяем файлы игры');
                     await replace(sourceFonts, targetFonts);
                     await replace(sourceLoc, targetLoc);
-                } else {
-                    logger('Файл не скачан');
+                }
+                else {
+                    logger('Качаем перевод');
+                    const file = path.join(downDir, 'rus.zip');
+                    const zip = await downloadFile('1b06167m9_GtzUCCW2nyFrhiH-UUoR-wE', file);
+
+                    if (zip) {
+                        logger('Файл скачан, распакоука');
+                        await admZip(path.join(downDir, 'rus.zip'), path.join(downDir, 'rus'));
+
+                        logger('Заменяем файлы игры');
+                        await replace(sourceFonts, targetFonts);
+                        await replace(sourceLoc, targetLoc);
+                    } else {
+                        logger('Файл не скачан');
+                    }
                 }
             }
             // TO DO
-            if (videoUpd){
+            if (videoUpd) {
                 logger('Заменяем видео');
                 const sourceVideos = config.videosDir;
                 const targetVideos = path.join(config.readSavedPath(), config.videoDirTemplate);
-    
+
                 await replace(sourceVideos, targetVideos);
             }
-    
+
             HTMLstartBut.removeAttribute('disabled');
             logger('Готово');
         }
