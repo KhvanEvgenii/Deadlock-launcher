@@ -14,6 +14,8 @@ const HTMLstartBut = document.getElementById('startDL');
 const HTMLstatusBlock = document.getElementById('statusBlock');
 const HTMLvideoLoop = document.getElementById('videoPreviewLoop');
 const HTMLvideoIntro = document.getElementById('videoPreviewIntro');
+const HTMLbutLoop = document.getElementById('selectLoopVideo');
+const HTMLbutIntro = document.getElementById('selectIntroVideo');
 
 document.getElementById('selectFolder').addEventListener('click', async () => {
     const path = await ipcRenderer.invoke('select-folder');
@@ -30,7 +32,8 @@ document.getElementById('selectFolder').addEventListener('click', async () => {
 document.getElementById('selectLoopVideo').addEventListener('click', async () => {
     const path = await ipcRenderer.invoke('select-video', true);
     if (path) {
-        HTMLvideoLoop.setAttribute('src', path);
+        HTMLvideoLoop.setAttribute('src', path);    
+        videoUpdate();
     }
     else {
         // HTMLselectedPath.textContent = 'Выбрана некорректная папка!';
@@ -41,6 +44,7 @@ document.getElementById('selectIntroVideo').addEventListener('click', async () =
     const path = await ipcRenderer.invoke('select-video', false);
     if (path) {
         HTMLvideoIntro.setAttribute('src', path);
+        videoUpdate();
     }
     else {
         // HTMLselectedPath.textContent = 'Выбрана некорректная папка!';
@@ -66,10 +70,6 @@ function changeTab(evt, tabName) {
 
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
-}
-
-function openExternal(link) {
-    shell.openExternal(link);
 }
 
 async function updateProgress() {
@@ -99,6 +99,8 @@ async function updateProgress() {
             const videoUpd = videoIntro || videoLoop;
             const updateNeeded = transUpd || folderUpd;
 
+            HTMLbutLoop.removeAttribute('disabled');
+            HTMLbutIntro.removeAttribute('disabled');
             HTMLselectedPath.textContent = pathDir;
 
             if (updateNeeded) {
@@ -124,20 +126,18 @@ async function updateProgress() {
                     }
                 }
             }
-            // TO DO
-            if (videoUpd) {
-                logger('Заменяем видео');
-                const sourceVideos = config.videosDir;
-                const targetVideos = path.join(config.readSavedPath(), config.videoDirTemplate);
-
-                await replace(sourceVideos, targetVideos);
+            
+            if (videoUpd && folderUpd) {
+                videoUpdate();
             }
 
             HTMLstartBut.removeAttribute('disabled');
-            logger('Готово');
+            logger('Игра готова к запуску');
         }
         else {
             document.getElementById("SettingsTab").click();
+            HTMLselectedPath.textContent = 'Пример пути D:\\SteamLibrary\\steamapps\\common\\Deadlock';
+            logger('Выберите папку с игрой');
         }
     } catch (error) {
         console.error('Ошибка сохранения конфига:', error);
@@ -145,8 +145,21 @@ async function updateProgress() {
 
 }
 
+async function videoUpdate() {
+    
+    const dirPath = config.readSavedPath(); 
+    if (dirPath) {
+        logger('Заменяем видео');
+        const sourceVideos = config.videosDir;
+        const targetVideos = path.join(config.readSavedPath(), config.videoDirTemplate);
+    
+        await replace(sourceVideos, targetVideos);
+        logger('Видео обновлено',true);
+    }
+}
+
 function beforeUpdateProgress() {
-    const updateApp = updater.checkUpdate(updateProgress);
+    updater.checkUpdate(updateProgress);
 }
 
 

@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-image: url("background.webp");
+  background-image: url("infernus.webp");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -26,7 +26,7 @@ body {
 .container {
   max-width: 700px;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, .7);
+  background-color: rgba(255, 255, 255, .2);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -34,10 +34,10 @@ body {
 
 .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background-color: #f1f1f1;
+  background-color: rgba(255, 255, 255, .3);
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -74,13 +74,30 @@ body {
 .tabcontent {
   display: none;
   padding: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
+  background: rgba(255, 255, 255, .5);
+  /* border: 1px solid #ccc; */
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top: none;
   max-height: 400px;
   overflow-y: auto;
+  animation: fadeEffect .5s;
+}
+
+.tabcontent::-webkit-scrollbar {
+  width: 5px;
+  background-color:  rgba(255, 255, 255, .5);
+}
+
+.tabcontent::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background-color: rgb(54, 54, 54);
+}
+
+.tabcontent::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color:  rgba(255, 255, 255, .5);;
 }
 
 .selectFolder {
@@ -90,20 +107,41 @@ body {
   margin-bottom: 10px;
 }
 
-.selectFolder .folder-title {
+.folder-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.selectFolder .folder-text {
+.folder-text {
   font-size: 12px;
 }
 
 .settings {
   padding: 10px;
-  background-color: white;
+  /* background-color:  rgba(255, 255, 255, .5); */
   border-radius: 8px;
+}
+
+.videoSettings {
+  display: flex;
+  /* grid-template-columns: repeat(2, 1fr);  */
+  gap: 10px; 
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.selectVideo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1 1 50%;
+}
+
+video {
+  padding: 5px;
+  border-radius: 20px;
 }
 
 .status {
@@ -151,10 +189,6 @@ body {
   height: 20px;
 }
 
-.tabcontent {
-  animation: fadeEffect .5s;
-}
-
 @keyframes fadeEffect {
   from {
     opacity: 0;
@@ -174,6 +208,10 @@ body {
   border: none;
 }
 
+.butSelectVideo {
+  margin-top: auto;
+}
+
 .myButton:enabled:hover {
   background-color: rgb(54, 54, 54);
 }
@@ -191,19 +229,34 @@ body {
   height: 130px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
+  transition: all .2s;
+  opacity: 0.5;
+}
+
+.logoDeadLock:hover {
+  opacity: 0.9;
 }
 
 .logotwitch {
   height: 20px;
 }
+
 .logo {
     position: relative;
     text-align: center;
 }
 
+.red {
+  background-color: rgba(200, 0, 0, 0.6);
+  padding: 6px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 0.837em;
+}
 
 #statusBlock {
-  max-height: 300px;
+  max-height: 200px;
   background-color: rgba(0, 0, 0, .9);
   font-size: 0.8rem;
   line-height: 1.2rem;
@@ -212,6 +265,23 @@ body {
   color: rgb(0, 255, 0);
   overflow-y: auto;
   margin-bottom: 10px;
+}
+
+#statusBlock::-webkit-scrollbar {
+  width: 10px;
+  background-color:  rgba(0, 0, 0, 0);
+}
+
+#statusBlock::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background-color: rgba(0, 255, 0, 1);
+  width: 8px;
+}
+
+#statusBlock::-webkit-scrollbar-track {
+  background-color:  rgba(0, 0, 0, 0);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 #selectedPath,

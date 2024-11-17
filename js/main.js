@@ -9,7 +9,8 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 800,
-        autoHideMenuBar: false,
+        autoHideMenuBar: true,
+        // crtl+shift+i
         icon: '../static/icon.png',
         webPreferences: {
             nodeIntegration: true,

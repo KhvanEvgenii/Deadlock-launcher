@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Deadlock launcher</title>
-    <link rel="preload" href="../static/background.webp" as="image">
+    <link rel="preload" href="../static/infernus.webp" as="image">
     <link rel="shortcut icon" href="../static/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/logo deadlock one.png">
@@ -40,20 +40,24 @@
                         <div class="developers-title"> Разработчики:</div>
                         <div class="developer"> KhvanEvgenii: &nbsp;
                             <img class="imgLink logotwitch" src="../static/twitch-icon.svg"
-                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://www.twitch.tv/netotgamer')" />
+                                alt="Крупнейшее русскоязычное сообщество"
+                                onclick="openExternal('https://www.twitch.tv/netotgamer')" />
                         </div>
                         <div class="developer"> romanvht: &nbsp;
                             <img class="imgLink logotwitch" src="../static/twitch-icon.svg"
-                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://www.twitch.tv/romanvht')" />
+                                alt="Крупнейшее русскоязычное сообщество"
+                                onclick="openExternal('https://www.twitch.tv/romanvht')" />
                             &nbsp;
                             <img class="imgLink logotwitch" src="../static/telegram-logo.svg"
-                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://t.me/vht_zone')" />
+                                alt="Крупнейшее русскоязычное сообщество"
+                                onclick="openExternal('https://t.me/vht_zone')" />
                         </div>
                     </div>
                     <div class="developers">
                         <div class="developers-title">Поддержка и предложения: &nbsp;
                             <img class="imgLink logotwitch" src="../static/telegram-logo.svg"
-                                alt="Крупнейшее русскоязычное сообщество" onclick="openExternal('https://t.me/DeadLock_Launcher')" />
+                                alt="Крупнейшее русскоязычное сообщество"
+                                onclick="openExternal('https://t.me/DeadLock_Launcher')" />
                         </div>
                     </div>
                 </div>
@@ -71,28 +75,28 @@
                         </div>
                         <button class="myButton" id="selectFolder">Выбрать папку</button>
                     </div>
-                    <div>
-                        <div class="selectFolder">
+                    <div class="videoSettings">
+                        <div class="selectVideo">
                             <div class="folder-info">
                                 <div class="folder-title">Выберите видео для меню</div>
                             </div>
-                            <button class="myButton" id="selectLoopVideo">Выбрать видео</button>
+                            <video class='videoPreview' width="250" id="videoPreviewLoop" src="">
+                                <source src="../static/loop.mp4" type="video/webm">
+                            </video>
+                            <button class="myButton butSelectVideo" id="selectLoopVideo" disabled>Выбрать видео</button>
                         </div>
-                        <video controls="" width="250" id="videoPreviewLoop" src="">
-                            <source src="" type="video/webm">
-                        </video>
-                    </div>
-                    <div>
-                        <div class="selectFolder">
+                        <div class="selectVideo">
                             <div class="folder-info">
                                 <div class="folder-title">Выберите видео для загрузки</div>
-                                <div class="folder-text">Важно! Не выбирайте долгие видео, </br> так как игра
-                                    запуститься только после окончания видео</div>
                             </div>
-                            <button class="myButton" id="selectIntroVideo">Выбрать видео</button>
+                            <video class='videoPreview' width="250" id="videoPreviewIntro">
+                                <source src="../static/intro.mp4" type="video/webm">
+                            </video>
+                            <div class="folder-text red">
+                                Важно! Не выбирайте долгие видео, так как игра запуститься только после окончания видео
+                            </div>
+                            <button class="myButton butSelectVideo" id="selectIntroVideo" disabled>Выбрать видео</button>
                         </div>
-                        <video controls width="250" id="videoPreviewIntro">
-                            <source src="" type="video/webm" />
                     </div>
                 </div>
             </div>
