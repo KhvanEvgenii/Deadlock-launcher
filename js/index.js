@@ -145,6 +145,10 @@ async function updateProgress() {
 
 }
 
+function openExternal(link) {
+    shell.openExternal(link);
+}
+
 async function videoUpdate() {
     
     const dirPath = config.readSavedPath(); 
